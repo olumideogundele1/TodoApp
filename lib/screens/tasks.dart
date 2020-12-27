@@ -6,7 +6,11 @@ import 'package:to_do_app/screens/add_tasks.dart';
 class TaskScreen extends StatelessWidget{
 
   Widget buildBottomSheet(BuildContext context){
-    return AddTaskScreen();
+    return SingleChildScrollView(
+      child: Container(
+          padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: AddTaskScreen()),
+    );
   }
 
 
@@ -20,7 +24,10 @@ class TaskScreen extends StatelessWidget{
         child: Icon(Icons.add),
         onPressed: (){
           //add bottom sheet widget
-          showModalBottomSheet(context: context, builder: buildBottomSheet);
+          showModalBottomSheet(
+              context: context,
+//              isScrollControlled: true,
+              builder: buildBottomSheet);
         },
       ),
       body: Column(
