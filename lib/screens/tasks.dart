@@ -1,18 +1,42 @@
 
 import 'package:flutter/material.dart';
 import 'package:to_do_app/components/task_list.dart';
+import 'package:to_do_app/models/Task.dart';
 import 'package:to_do_app/screens/add_tasks.dart';
 
-class TaskScreen extends StatelessWidget{
+class TaskScreen extends StatefulWidget{
+
+  @override
+  _TaskScreenState createState() => _TaskScreenState();
+}
+
+class _TaskScreenState extends State<TaskScreen> {
+
 
   Widget buildBottomSheet(BuildContext context){
     return SingleChildScrollView(
       child: Container(
           padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-          child: AddTaskScreen()),
+          child: AddTaskScreen((newTaskTitle){
+            setState(() {
+              if(newTaskTitle != null){
+                list.add(Task(isChecked: false,title: newTaskTitle));
+              }else{
+                print('Task title is empty');
+              }
+            });
+          Navigator.pop(context);
+          })),
+
     );
   }
 
+  List<Task> list = [
+    Task(title:'Pray in the Morning',isChecked: false),
+    Task(title:'Do house chores',isChecked: false),
+    Task(title:'Work out',isChecked: false),
+    Task(title:'Coding',isChecked: false),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +77,7 @@ class TaskScreen extends StatelessWidget{
                   fontWeight: FontWeight.w700
                 ),
                 ),
-                Text('12 Tasks',
+                Text('${list.length} Tasks',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize:18.0
@@ -69,12 +93,11 @@ class TaskScreen extends StatelessWidget{
                   color: Colors.white,
                   borderRadius: BorderRadius.only(topLeft: Radius.circular(10.0),topRight: Radius.circular(10.0))
               ),
-              child: TaskList(),
+              child: TaskList(list),
             ),
           ),
         ],
       )
     );
   }
-
 }
