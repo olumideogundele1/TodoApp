@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:to_do_app/models/Task.dart';
+import 'package:to_do_app/models/task_data.dart';
 
 
 class AddTaskScreen extends StatelessWidget {
-
-  final Function addTask;
-
-  AddTaskScreen(this.addTask);
-
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +47,13 @@ class AddTaskScreen extends StatelessWidget {
                 ),),
                 onPressed: (){
                   //add new tasks
-                 addTask(textValue);
+                  if(textValue != null){
+                    final task = Task(title: textValue, isChecked: false);
+                    Provider.of<TaskData>(context,listen: false).addTask(task);
+                    Navigator.pop(context);
+                  }else{
+                    print('Text value is null!!');
+                  }
                 },
                 color:Colors.lightBlueAccent,
               ),
